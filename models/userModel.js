@@ -30,7 +30,12 @@ const userSchema = mongoose.Schema({
             message: "Password and Confirm Password Does Not Match!!!"
         }
     },
-    image: Buffer
+    image: String,
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        default: "user"
+    }
 })
 
 
