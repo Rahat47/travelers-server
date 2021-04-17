@@ -1,3 +1,4 @@
+import { response } from "express";
 import Tours from "../models/tourModel.js";
 
 export const getAllTours = async (req, res) => {
@@ -34,6 +35,24 @@ export const getBestTour = async (req, res) => {
             message: error.message,
             error
         })
+    }
+}
+
+export const getSinleTour = async (req, res) => {
+    try {
+        const tour = await Tours.findById(req.params.id)
+        if (!tour) {
+            return res.status(404).json({ message: "No Tours Found!!!!!!" })
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                tour
+            }
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
     }
 }
 

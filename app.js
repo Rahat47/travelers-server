@@ -3,6 +3,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import tourRoutes from './routes/tourRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import reviewRoutes from './routes/reviewRoutes.js'
 
 //Declare express app
 const app = express()
@@ -17,6 +18,7 @@ app.use(express.static("public"))
 //routes
 app.use("/tours", tourRoutes)
 app.use("/users", userRoutes)
+app.use("/reviews", reviewRoutes)
 
 
 app.get("/", (req, res) => {
