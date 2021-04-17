@@ -50,6 +50,21 @@ export const loginUser = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
+}
 
 
+export const getAdmins = async (req, res) => {
+    try {
+        const admins = await Users.find({ role: "admin" }).sort("-joinedAt")
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                admins
+            }
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
 }

@@ -35,6 +35,10 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ["admin", "user"],
         default: "user"
+    },
+    joinedAt: {
+        type: Date,
+        default: Date.now()
     }
 })
 
