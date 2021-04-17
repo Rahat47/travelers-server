@@ -68,3 +68,30 @@ export const getAdmins = async (req, res) => {
 
     }
 }
+
+export const makeNewAdmin = async (req, res) => {
+    const email = req.body.email
+    try {
+        const user = await Users.findOne({ email })
+        if (!user) {
+            return res.status(400).json({ message: "Looks like this user is not present in our system. Please Sign up first" })
+        }
+
+        if (user.role === "admin") {
+            return res.status(400).json({ message: "This user is already an Admin." })
+        }
+
+        user.role = "admin"
+        await user.save({ validateBeforeSave: false })
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                user
+            }
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
+}

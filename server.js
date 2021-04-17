@@ -8,7 +8,8 @@ const dburi = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@clust
 mongoose.connect(dburi, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true
 }).then(() => {
     console.log("Database Connected and Running")
 }).catch(err => {
