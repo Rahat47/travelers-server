@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get("/get-five-latest", getFiveLatestReviews)
 
-router.route("/").get(getAllReviews).post(insertAllReviews)
+router.route("/").get(getAllReviews)
 
 router.route("/:id").get(getReviewByTourId)
 

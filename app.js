@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import tourRoutes from './routes/tourRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 import { stripeGateway } from './stripe.js'
 
 //Declare express app
@@ -20,6 +21,7 @@ app.use(express.static("public"))
 app.use("/tours", tourRoutes)
 app.use("/users", userRoutes)
 app.use("/reviews", reviewRoutes)
+app.use("/orders", orderRoutes)
 
 
 app.get("/", (req, res) => {
