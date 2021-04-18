@@ -76,6 +76,16 @@ export const insertNewTour = async (req, res) => {
     }
 }
 
+export const deleteTour = async (req, res) => {
+    const id = req.params.id
+    try {
+        await Tours.findByIdAndDelete(id)
+        res.status(204).json({ message: "Tour Deleted Successfully" })
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
 // export const uploadAllTours = async (req, res) => {
 //     const tours = req.body
 //     try {

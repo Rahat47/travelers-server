@@ -35,3 +35,20 @@ export const getAllOrders = async (req, res) => {
 
     }
 }
+
+
+export const updateOrder = async (req, res) => {
+    const id = req.params.id
+    try {
+        const order = await Orders.findByIdAndUpdate(id, req.body)
+        res.status(200).json({
+            status: "success",
+            data: {
+                order
+            }
+        })
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+
+    }
+}
