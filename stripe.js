@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_API_KEY)
 
 export const stripeGateway = async (req, res) => {
     const tour = req.body
-    const CLIENT = `http://localhost:3000/checkout/${tour._id}`
+    const CLIENT = `https://travelers-aeedc.web.app/checkout/${tour._id}`
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
