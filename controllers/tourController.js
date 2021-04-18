@@ -56,6 +56,26 @@ export const getSinleTour = async (req, res) => {
     }
 }
 
+export const insertNewTour = async (req, res) => {
+    const tourData = req.body
+
+    try {
+        const tour = await Tours.create(tourData)
+        res.status(201).json({
+            status: "success",
+            data: {
+                tour
+            }
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: "failed",
+            message: error.message,
+            error
+        })
+    }
+}
+
 // export const uploadAllTours = async (req, res) => {
 //     const tours = req.body
 //     try {

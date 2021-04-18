@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import tourRoutes from './routes/tourRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
+import { stripeGateway } from './stripe.js'
 
 //Declare express app
 const app = express()
@@ -24,6 +25,8 @@ app.use("/reviews", reviewRoutes)
 app.get("/", (req, res) => {
     res.send("Welcome to Travelers API")
 })
+
+app.post("/chekcout/stripe", stripeGateway)
 
 
 export default app

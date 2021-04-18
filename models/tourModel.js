@@ -58,13 +58,19 @@ const tourSchema = new mongoose.Schema({
         default: Date.now(),
         select: false
     },
-    startDates: [Date],
+    startDates: {
+        type: [Date],
+        required: [true, "A start date must be provided"]
+    },
     secretTour: {
         type: Boolean,
         default: false
     },
     tourGuide: String,
-    startLocation: String,
+    startLocation: {
+        type: String,
+        required: [true, "A tour must have a start location"]
+    },
 })
 
 //DOCUMENT MIDDLEWARE, runs before save and create command

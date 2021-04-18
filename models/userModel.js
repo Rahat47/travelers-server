@@ -39,6 +39,9 @@ const userSchema = mongoose.Schema({
     joinedAt: {
         type: Date,
         default: Date.now()
+    },
+    toursBought: {
+        type: [String]
     }
 })
 
