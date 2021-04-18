@@ -52,3 +52,20 @@ export const updateOrder = async (req, res) => {
 
     }
 }
+
+export const getOrdersByEmail = async (req, res) => {
+    const email = req.params.email
+    try {
+        const orders = await Orders.find({ userEmail: email })
+        res.status(200).json({
+            status: "success",
+            data: {
+                orders
+            }
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
+
+}

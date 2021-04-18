@@ -1,11 +1,12 @@
 import express from 'express'
-import { getAllReviews, getFiveLatestReviews, getReviewByTourId, insertAllReviews } from '../controllers/reviewController.js'
+import { createNewReview, getAllReviews, getFiveLatestReviews, getReviewByTourId, getReviewByUser } from '../controllers/reviewController.js'
 
 const router = express.Router()
 
 router.get("/get-five-latest", getFiveLatestReviews)
+router.get("/by-user/:user", getReviewByUser)
 
-router.route("/").get(getAllReviews)
+router.route("/").get(getAllReviews).post(createNewReview)
 
 router.route("/:id").get(getReviewByTourId)
 

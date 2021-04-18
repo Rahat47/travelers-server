@@ -60,3 +60,35 @@ export const getFiveLatestReviews = async (req, res) => {
 
     }
 }
+
+export const getReviewByUser = async (req, res) => {
+    const user = req.params.user
+    try {
+        const reviews = await Reviews.find({ user })
+        res.status(200).json({
+            status: "success",
+            data: {
+                reviews
+            }
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
+}
+
+
+export const createNewReview = async (req, res) => {
+    try {
+        const review = await Reviews.create(req.body)
+        res.status(200).json({
+            status: "success",
+            data: {
+                review
+            }
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
+}
