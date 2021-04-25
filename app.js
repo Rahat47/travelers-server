@@ -6,7 +6,8 @@ import userRoutes from './routes/userRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import { stripeGateway } from './stripe.js'
-
+import AppError from './utils/appError.js'
+import { handleError } from './controllers/errorController.js'
 //Declare express app
 const app = express()
 
@@ -29,6 +30,14 @@ app.get("/", (req, res) => {
 })
 
 app.post("/chekcout/stripe", stripeGateway)
+
+
+app.all("*", (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
+})
+
+//Global Error Handler
+app.use(handleError)
 
 
 export default app

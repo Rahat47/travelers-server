@@ -1,101 +1,62 @@
-import { response } from "express";
 import Tours from "../models/tourModel.js";
+import { catchAsync } from "../utils/catchAsync.js";
+import AppError from '../utils/appError.js'
 
-export const getAllTours = async (req, res) => {
-    try {
-        const tours = await Tours.find()
-        res.status(200).json({
-            status: "Success",
-            tourCount: tours.length,
-            data: {
-                tours
-            }
-        })
-    } catch (error) {
-        res.status(404).json({
-            status: "failed",
-            message: error.message,
-            error
-        })
-    }
-}
-
-export const getBestTour = async (req, res) => {
-    try {
-        const data = await Tours.find().sort("-ratingsAverage").limit(2)
-        res.status(200).json({
-            status: "success",
-            data: {
-                data
-            }
-        })
-    } catch (error) {
-        res.status(404).json({
-            status: "failed",
-            message: error.message,
-            error
-        })
-    }
-}
-
-export const getSinleTour = async (req, res) => {
-    try {
-        const tour = await Tours.findById(req.params.id)
-        if (!tour) {
-            return res.status(404).json({ message: "No Tours Found!!!!!!" })
+export const getAllTours = catchAsync(async (req, res, next) => {
+    const tours = await Tours.find()
+    res.status(200).json({
+        status: "Success",
+        tourCount: tours.length,
+        data: {
+            tours
         }
+    })
+})
 
-        res.status(200).json({
-            status: "success",
-            data: {
-                tour
-            }
-        })
-    } catch (error) {
-        res.status(404).json({ message: error.message })
+export const getBestTour = catchAsync(async (req, res, next) => {
+    const data = await Tours.find().sort("-ratingsAverage").limit(2)
+    res.status(200).json({
+        status: "success",
+        data: {
+            data
+        }
+    })
+})
+
+export const getSinleTour = catchAsync(async (req, res, next) => {
+    const tour = await Tours.findById(req.params.id)
+    if (!tour) {
+        return next(new AppError("There is no tour by this name in the Database", 404))
     }
-}
 
-export const insertNewTour = async (req, res) => {
+    res.status(200).json({
+        status: "success",
+        data: {
+            tour
+        }
+    })
+})
+
+export const insertNewTour = catchAsync(async (req, res, next) => {
     const tourData = req.body
 
-    try {
-        const tour = await Tours.create(tourData)
-        res.status(201).json({
-            status: "success",
-            data: {
-                tour
-            }
-        })
-    } catch (error) {
-        res.status(400).json({
-            status: "failed",
-            message: error.message,
-            error
-        })
-    }
-}
+    const tour = await Tours.create(tourData)
+    res.status(201).json({
+        status: "success",
+        data: {
+            tour
+        }
+    })
+})
 
-export const deleteTour = async (req, res) => {
+export const deleteTour = catchAsync(async (req, res, next) => {
     const id = req.params.id
-    try {
-        await Tours.findByIdAndDelete(id)
-        res.status(204).json({ message: "Tour Deleted Successfully" })
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
-}
+    await Tours.findByIdAndDelete(id)
+    res.status(204).json({ message: "Tour Deleted Successfully" })
+})
 
-// export const uploadAllTours = async (req, res) => {
+// export const uploadAllTours = catchAsync(async (req, res, next) => {
 //     const tours = req.body
-//     try {
-//         const data = await Tours.insertMany(tours)
-//         res.status(201).json({ data })
-//     } catch (error) {
-//         res.status(500).json({
-//             status: "failed",
-//             message: error.message,
-//             error
-//         })
-//     }
-// }
+//     const data = await Tours.insertMany(tours)
+//     res.status(201).json({ data })
+// })
