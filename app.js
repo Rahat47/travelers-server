@@ -19,10 +19,10 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }))
 app.use(express.static("public"))
 
 //routes
-app.use("/tours", tourRoutes)
-app.use("/users", userRoutes)
-app.use("/reviews", reviewRoutes)
-app.use("/orders", orderRoutes)
+app.use("/api/v1/tours", tourRoutes)
+app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/reviews", reviewRoutes)
+app.use("/api/v1/orders", orderRoutes)
 
 
 app.get("/", (req, res) => {

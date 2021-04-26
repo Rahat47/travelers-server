@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Porgramming-Hero-web-course/complete-website-server-Rahat47.git"
+        "url": "git+https://github.com/Rahat47/travelers-server.git"
     },
     "keywords": [
         "RESTful",
@@ -22,9 +22,9 @@
     "author": "Rahat",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/Porgramming-Hero-web-course/complete-website-server-Rahat47/issues"
+        "url": "https://github.com/Rahat47/travelers-server/issues"
     },
-    "homepage": "https://github.com/Porgramming-Hero-web-course/complete-website-server-Rahat47#readme",
+    "homepage": "https://github.com/Rahat47/travelers-server#readme",
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "cors": "^2.8.5",

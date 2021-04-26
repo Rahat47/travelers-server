@@ -1,71 +1,57 @@
 import Orders from "../models/orderModel.js";
 import Tour from "../models/tourModel.js";
+import { catchAsync } from "../utils/catchAsync.js";
 
-export const createNewOrder = async (req, res) => {
+
+export const createNewOrder = catchAsync(async (req, res, next) => {
     const orderDetails = req.body
 
     const selectedTour = await Tour.findById(orderDetails.tourId)
     orderDetails.totalAmmount = selectedTour.price
     orderDetails.tourName = selectedTour.name
 
-    try {
-        const order = await Orders.create(orderDetails)
-        res.status(200).json({
-            status: "success",
-            data: {
-                order
-            }
-        })
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
+    const order = await Orders.create(orderDetails)
+    res.status(200).json({
+        status: "success",
+        data: {
+            order
+        }
+    })
 }
-
-export const getAllOrders = async (req, res) => {
-    try {
-        const orders = await Orders.find()
-        res.status(200).json({
-            status: "success",
-            data: {
-                orders
-            }
-        })
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-
-    }
-}
+)
+export const getAllOrders = catchAsync(async (req, res, next) => {
+    const orders = await Orders.find()
+    res.status(200).json({
+        status: "success",
+        total_data: orders.length,
+        data: {
+            orders
+        }
+    })
+})
 
 
-export const updateOrder = async (req, res) => {
+export const updateOrder = catchAsync(async (req, res, next) => {
     const id = req.params.id
-    try {
-        const order = await Orders.findByIdAndUpdate(id, req.body)
-        res.status(200).json({
-            status: "success",
-            data: {
-                order
-            }
-        })
-    } catch (error) {
-        res.status(400).json({ message: error.message })
+    const order = await Orders.findByIdAndUpdate(id, req.body)
+    res.status(200).json({
+        status: "success",
+        message: "Order Updated Successfully",
+        data: {
+            order
+        }
+    })
+})
 
-    }
-}
-
-export const getOrdersByEmail = async (req, res) => {
+export const getOrdersByEmail = catchAsync(async (req, res, next) => {
     const email = req.params.email
-    try {
-        const orders = await Orders.find({ userEmail: email })
-        res.status(200).json({
-            status: "success",
-            data: {
-                orders
-            }
-        })
-    } catch (error) {
-        res.status(404).json({ message: error.message })
+    const orders = await Orders.find({ userEmail: email })
+    res.status(200).json({
+        status: "success",
+        total_data: orders.length,
+        data: {
+            orders
+        }
+    })
 
-    }
-
-}
+})
