@@ -4,11 +4,14 @@ import { createNewOrder, getAllOrders, getOrdersByEmail, updateOrder } from '../
 const router = express.Router()
 
 
-router.route("/").get(getAllOrders).post(createNewOrder)
+router.route("/")
+    .get(getAllOrders)
+    .post(createNewOrder)
 
 router.get("/by-email/:email", getOrdersByEmail)
 
-router.route("/:id").patch(updateOrder)
+router.route("/:id")
+    .patch(updateOrder)
 
 
 export default router

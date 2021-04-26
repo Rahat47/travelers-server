@@ -26,7 +26,7 @@ export const getBestTour = catchAsync(async (req, res, next) => {
 export const getSinleTour = catchAsync(async (req, res, next) => {
     const tour = await Tours.findById(req.params.id)
     if (!tour) {
-        return next(new AppError("There is no tour by this name in the Database", 404))
+        return next(new AppError("There is no tour by this Id", 404))
     }
 
     res.status(200).json({
@@ -51,8 +51,17 @@ export const insertNewTour = catchAsync(async (req, res, next) => {
 
 export const deleteTour = catchAsync(async (req, res, next) => {
     const id = req.params.id
-    await Tours.findByIdAndDelete(id)
-    res.status(204).json({ message: "Tour Deleted Successfully" })
+
+    const tour = await Tours.findByIdAndDelete(id)
+
+    if (!tour) {
+        return next(new AppError("There is no tour by this Id", 404))
+    }
+
+    res.status(204).json({
+        status: "success",
+        data: null
+    })
 })
 
 // export const uploadAllTours = catchAsync(async (req, res, next) => {

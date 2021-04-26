@@ -1,5 +1,6 @@
 import Orders from "../models/orderModel.js";
 import Tour from "../models/tourModel.js";
+import AppError from "../utils/appError.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
 
@@ -7,6 +8,11 @@ export const createNewOrder = catchAsync(async (req, res, next) => {
     const orderDetails = req.body
 
     const selectedTour = await Tour.findById(orderDetails.tourId)
+
+    if (!selectedTour) {
+        return next(new AppError("No tours selected. Failed to create an order", 400))
+    }
+
     orderDetails.totalAmmount = selectedTour.price
     orderDetails.tourName = selectedTour.name
 

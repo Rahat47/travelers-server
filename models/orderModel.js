@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+import validator from 'validator'
 
 const orderSchema = mongoose.Schema({
     userName: {
@@ -9,7 +9,8 @@ const orderSchema = mongoose.Schema({
     },
     userEmail: {
         type: String,
-        required: [true, "User Email is required"]
+        required: [true, "User Email is required."],
+        validate: [validator.isEmail, "Must provide a valid email."]
     },
     tourId: {
         type: String,
@@ -19,7 +20,10 @@ const orderSchema = mongoose.Schema({
         type: String,
         trim: true
     },
-    paymentId: String,
+    paymentId: {
+        type: String,
+        required: [true, "Payment ID is required to complete order"],
+    },
     totalAmmount: {
         type: Number,
         min: [1, "Total Price can't be less than 1"]

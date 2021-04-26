@@ -4,9 +4,13 @@ import { deleteTour, getAllTours, getBestTour, getSinleTour, insertNewTour } fro
 const router = express.Router()
 router.get("/best-tours", getBestTour)
 
-router.route("/").get(getAllTours).post(insertNewTour)
+router.route("/")
+    .get(getAllTours)
+    .post(insertNewTour)
 
-router.route("/:id").get(getSinleTour).delete(deleteTour)
+router.route("/:id")
+    .get(getSinleTour)
+    .delete(deleteTour)
 
 
 
